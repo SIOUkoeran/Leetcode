@@ -1,5 +1,5 @@
 class Solution {
-    int[] nums = new int[39];
+    int[] nums = new int[38];
     public int tribonacci(int n) {
         nums[0] = 0;
         nums[1] = 1;
