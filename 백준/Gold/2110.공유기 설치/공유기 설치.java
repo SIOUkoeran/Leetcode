@@ -35,14 +35,12 @@ public class Main {
     }
     static boolean determination(int gap){
         int cnt = 1;
-        int[] selected = new int[N + 1];
-        selected[1] = map[1];
-        int selectedIdx = 1;
+        int last = map[1];
+
         for (int i = 2; i < N + 1; i++) {
-            if (map[i] - selected[selectedIdx] >= gap){
+            if (map[i] - last >= gap){
                 ++cnt;
-                ++selectedIdx;
-                selected[selectedIdx] = map[i];
+                last = map[i];
             }
 
         }
