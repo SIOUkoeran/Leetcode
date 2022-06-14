@@ -42,7 +42,7 @@ public class Main {
 		}
         dp[N][N] = true;
 		for (int i = N - 1; i >= 1; i--) {
-			for (int j = i + 2; j < N + 1; j++) {
+			for (int j = i + 1; j < N + 1; j++) {
 				if (numbers[i] == numbers[j] && dp[i + 1][j - 1]) {
 					dp[i][j] = true;
 				}
