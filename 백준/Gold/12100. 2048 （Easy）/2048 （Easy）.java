@@ -1,140 +1,169 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Main {
-	static int N,max;
-	public static void main(String[] args) throws Exception{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		int[][] map = new int[N][N];
-		max = 0;
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(br.readLine());
-			for (int j = 0; j < N; j++) {
-				map[i][j] = Integer.parseInt(st.nextToken());
-			}
-		}
-		solution(map);
-	}
-	public static void solution(int[][] map) {
-		brute(0, map);
-		
-		System.out.println(max);
-	}
-	private static void brute(int cnt,int [][] map) {
-		if (cnt == 5) {
-			return;
-		}
-		for (int i = 0; i < 4; i++) {
-			int [][] copyMap = new int[N][N];
-			for (int idx = 0; idx < N; idx++) {
-				System.arraycopy(map[idx], 0, copyMap[idx],0, N);
-			}
-			brute(cnt + 1, rotate(i, copyMap));
-		}
-	}
-	
-	
-	private static int[][] rotate(int dir, int[][] map) {
-		if (dir == 0) {
-			for (int i = 0; i < N - 1; i++) {
-				for (int j = 0; j < N; j++) {
-					map = move0WhenDirEqual0(map, i,j);
-					map = moveMap(map, i,j,i + 1, j);
-				}
-			}
-		}else if (dir == 1) {
-			for (int i = N - 1; i > 0; i--) {
-				for (int j = 0; j < N; j++) {
-					map = move0WhenDirEqual1(map, i, j);
-					map = moveMap(map, i, j, i - 1, j);	
-				}
-			}
-			
-		}else if (dir == 2) {
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < N - 1; j++) {
-					map = move0WhenDirEqual2(map, i, j);
-					map = moveMap(map, i, j, i, j + 1);
-				}
-			}
-			
-		}else if (dir == 3) {
-			for (int i = 0; i < N; i++) {
-				for (int j = N - 1; j > 0; j--) {
-					map = move0WhenDirEqual3(map, i, j);
-					map = moveMap(map, i, j, i, j - 1);
-				}
-			}
-		}
-		for (int i = 0; i < N; i++) {
-			int temp = Arrays.stream(map[i]).max().getAsInt();
-			if (max < temp) {
-				max = temp;
-			}
-		}
-		return map;
-	}
-	
-	private static int[][] moveMap(int[][] map, int row, int col, int moveRow, int moveCol){
-		
-		if (map[row][col] == map[moveRow][moveCol] || map[row][col] == 0) {
-			map[row][col] = map[moveRow][moveCol] + map[row][col];
-			map[moveRow][moveCol] = 0;
-		}
-		return map;
-	}
-	
-	private static int[][] move0WhenDirEqual0(int[][] map, int row, int col){
-		for (int i = row; i < N - 1; i++) {
-			if (map[i][col] == 0) {
-				int tempRow = i + 1;
-				while (tempRow < N - 1 && map[tempRow][col] == 0)
-					tempRow++;
-				map[i][col] = map[tempRow][col];
-				map[tempRow][col] = 0;
-			}
-		}
-		return map;
-	}
-	private static int[][] move0WhenDirEqual1(int[][] map, int row, int col){
-		
-		for (int i = row; i > 0; i--) {
-			if (map[i][col] == 0) {
-				int tempRow = i - 1;
-				while (tempRow > 0 && map[tempRow][col] == 0)
-					tempRow--;
-				map[i][col] = map[tempRow][col];
-				map[tempRow][col] = 0;
-			}
-		}
-		return map;
-	}
-	
-	private static int[][] move0WhenDirEqual2(int [][]map, int row, int col){
-		for (int i = col; i < N - 1; i++) {
-			if (map[row][i] == 0) {
-				int tempCol = i + 1;
-				while (tempCol < N - 1 && map[row][tempCol] == 0)
-					tempCol++;
-				map[row][i] = map[row][tempCol];
-				map[row][tempCol] = 0;
-			}
-		}
-		return map;
-	}
-	private static int[][] move0WhenDirEqual3(int [][]map, int row, int col){
-		for (int i = col; i > 0; i--) {
-			if (map[row][i] == 0) {
-				int tempCol = i - 1;
-				while (tempCol > 0 && map[row][tempCol] == 0)
-					tempCol--;
-				map[row][i] = map[row][tempCol];
-				map[row][tempCol] = 0;
-			}
-		}
-		return map;
-		
-	}
+    static int n, max = Integer.MIN_VALUE;
+    static int[][] map;
+    public static void main(String[] args) throws Exception {
+        input();
+        solution();
+        System.out.println(max);
+    }
+
+    private static void input() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        map = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < n; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+    }
+
+    private static void solution() {
+        move(0, map);
+    }
+
+    private static void move(int cnt, int[][] map) {
+        if (cnt == 5){
+            findMax(map);
+            return;
+        }
+        /*
+         * 4방향 움직이기
+         */
+        for (int i = 0; i < 4; i++) {
+            int[][] nextMap = copyMap(map);
+            moveDir(i, nextMap);
+            move(cnt + 1, nextMap);
+        }
+    }
+
+    private static void findMax(int[][] map) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (map[i][j] > max) {
+                    max = map[i][j];
+                }
+            }
+        }
+    }
+
+    private static int[][] copyMap(int[][] map) {
+        int[][] copy = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            copy[i] = Arrays.copyOf(map[i], n);
+        }
+        return copy;
+    }
+
+    /**
+     * 상하 이동 함수
+     * 이전에 움직인 블럭 인덱스 파라미터화
+     * 1. 이전이 0이면 바로 블럭 한칸 이동
+     * 2. 이전이 현재 블럭과 같으면 합쳐서 한칸 이동 lastMove 갱신
+     * 3. 다르면 위에 한칸 이전으로 이동하고 lastMove 갱신
+     */
+    private static int moveUpOrDownBlock(int r, int c, int lastMoveBlock, int[][] inputMap, int dir) {
+        int prev = inputMap[lastMoveBlock][c];
+        if (inputMap[r][c] != 0) {
+            if (prev == 0){
+                inputMap[lastMoveBlock][c] = inputMap[r][c];
+                inputMap[r][c] = 0;
+            }
+            else if (prev == inputMap[r][c]) {
+                inputMap[r][c] = 0;
+                inputMap[lastMoveBlock][c] *= 2;
+                lastMoveBlock += dir;
+            }
+            else  {
+                lastMoveBlock += dir;
+                inputMap[lastMoveBlock][c] = inputMap[r][c];
+                if (lastMoveBlock != r)
+                    inputMap[r][c] = 0;
+            }
+        }
+        return lastMoveBlock;
+    }
+
+
+
+    private static int moveLeftOrRightBlock(int r, int c, int lastMoveBlock, int[][] inputMap, int dir) {
+        int prev = inputMap[r][lastMoveBlock];
+        if (inputMap[r][c] != 0) {
+            if (prev == 0){
+                inputMap[r][lastMoveBlock] = inputMap[r][c];
+                inputMap[r][c] = 0;
+            }
+            else if (prev == inputMap[r][c]) {
+                inputMap[r][c] = 0;
+                inputMap[r][lastMoveBlock] *= 2;
+                lastMoveBlock += dir;
+            }
+            else if (prev != inputMap[r][c]) {
+                lastMoveBlock += dir;
+                inputMap[r][lastMoveBlock] = inputMap[r][c];
+                if (lastMoveBlock != c)
+                    inputMap[r][c] = 0;
+            }
+        }
+        return lastMoveBlock;
+    }
+
+    private static void moveDir(int dir, int[][] map) {
+        /**
+         * up
+         */
+        if (dir == 0){
+            for (int i = 0; i < n; i++) {
+                int lastMoveBlock = 0;
+                for (int j = 1; j < n ; j++) {
+                    if (map[j][i] != 0){
+                        lastMoveBlock = moveUpOrDownBlock(j, i, lastMoveBlock, map, 1);
+                    }
+                }
+
+            }
+        }
+        /**
+         * down
+         */
+        else if (dir == 1) {
+            for (int i = 0; i < n; i++) {
+                int lastMoveBlock = n - 1;
+                for (int j = n - 2; j >= 0; j--) {
+                    lastMoveBlock = moveUpOrDownBlock(j, i, lastMoveBlock, map, -1);
+                }
+            }
+        }
+        /**
+         * left
+         */
+        else if (dir == 2) {
+            for (int i = 0; i < n; i++) {
+                int lastMoveBlock = 0;
+                for (int j = 1; j < n; j++) {
+                    lastMoveBlock = moveLeftOrRightBlock(i, j, lastMoveBlock, map, 1);
+                }
+            }
+        }
+        /**
+         * right
+         */
+        else {
+            for (int i = 0; i < n; i++) {
+                int lastMoveBlock = n - 1;
+                for (int j = n - 2; j >= 0; j--) {
+                    lastMoveBlock = moveLeftOrRightBlock(i, j, lastMoveBlock, map, -1);
+                }
+            }
+        }
+    }
+
 }
