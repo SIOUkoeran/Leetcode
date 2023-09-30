@@ -9,7 +9,6 @@ class Solution {
                 break;
             result = Math.max(idx + nums[idx], result);
             ++idx;
-            System.out.println(idx);
         }
         return result >= nums.length - 1 ? true : false;
     }
