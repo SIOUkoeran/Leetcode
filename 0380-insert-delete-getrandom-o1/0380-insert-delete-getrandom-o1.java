@@ -1,9 +1,8 @@
-
 class RandomizedSet {
-        private final Set<Integer> set = new HashSet<>();
-        private Random random;
+    private final Set<Integer> set;
+    
     public RandomizedSet() {
-            random = new Random();
+        this.set = new HashSet<Integer>();   
     }
     
     public boolean insert(int val) {
@@ -14,16 +13,15 @@ class RandomizedSet {
     }
     
     public boolean remove(int val) {
-        if (!set.contains(val)) {
+        if (!set.contains(val))
             return false;
-        }
         set.remove(val);
         return true;
     }
     
     public int getRandom() {
         int idx = 0;
-        int getIdx = random.nextInt(set.size());
+        int getIdx = new Random().nextInt(set.size());
         int returnValue = 0;
         for (int value : set) {
             if (idx == getIdx) {
