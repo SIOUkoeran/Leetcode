@@ -10,7 +10,6 @@ class Solution {
             if (cnt < citation) {
                 ++cnt;
             }
-            System.out.println(cnt);
         }
         return cnt;
     }
