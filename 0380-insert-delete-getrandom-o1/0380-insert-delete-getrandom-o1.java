@@ -1,7 +1,8 @@
 class RandomizedSet {
     private final Set<Integer> set;
-    
+    private final Random random;
     public RandomizedSet() {
+        random = new Random();
         this.set = new HashSet<Integer>();   
     }
     
@@ -21,7 +22,7 @@ class RandomizedSet {
     
     public int getRandom() {
         int idx = 0;
-        int getIdx = new Random().nextInt(set.size());
+        int getIdx = random.nextInt(set.size());
         int returnValue = 0;
         for (int value : set) {
             if (idx == getIdx) {
