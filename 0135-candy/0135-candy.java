@@ -4,7 +4,6 @@ class Solution {
         Arrays.fill(candy, 1);
         preFillCandy(candy, ratings);
         postFillCandy(candy, ratings);
-        System.out.println(Arrays.toString(candy));
         return calcAnswer(candy);
     }
     
