@@ -5,7 +5,7 @@ class Solution {
         int[] water = new int[height.length];
         
         int prevWall = height[0];
-        //fill water
+        //pour water
         for (int i = 1; i < height.length; i++) {
             if (prevWall < height[i]) {
                 prevWall = height[i];
@@ -17,7 +17,7 @@ class Solution {
         }
         prevWall = height[height.length - 1];
         
-        //pour water
+        //drain water
         for (int i = height.length - 1; i >= 0; i--) {
             if (prevWall < height[i]) {
                 prevWall = height[i];
