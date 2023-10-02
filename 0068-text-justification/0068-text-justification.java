@@ -16,7 +16,6 @@ class Solution {
         for (i = 0; i < wordsLength.length; i++) {
             int length = wordsLength[i];
             totalLine += length;
-//            System.out.println(" total " + totalLine);
             if (maxWidth < (i - lastIdx + totalLine)) {
                 result.add(makeString(lastIdx, --i, totalLine - length));
                 totalLine = 0;
@@ -28,7 +27,6 @@ class Solution {
     }
     
     private String makeString(int startIdx, int lastIdx, int total) {
-        System.out.println("start : " + startIdx + "end " + lastIdx + " total " + total);
         StringBuilder sb = new StringBuilder();
         int intervalCnt = lastIdx - startIdx == 0 ? 1 : lastIdx - startIdx;
         
@@ -48,7 +46,6 @@ class Solution {
     }
     
     private String makeLastString(int startIdx, int lastIdx, int total) {
-        System.out.println("start : " + startIdx + "end " + lastIdx + " total " + total);
         StringBuilder sb = new StringBuilder();
         int whiteSpace = maxWidth - total;
         int intervalCnt = lastIdx - startIdx == 0 ? 1 : lastIdx - startIdx;
