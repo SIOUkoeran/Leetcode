@@ -9,7 +9,6 @@ class Solution {
         int frontIdx = 0;
         int backIdx = s.length() - 1;
         for (int i = 0; i < t.length() / 2 + 1; i++) {
-            
             if (frontIdx > backIdx)
                 return true;
             if (s.charAt(frontIdx) == t.charAt(i)) {
