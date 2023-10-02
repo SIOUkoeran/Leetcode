@@ -21,8 +21,6 @@ class Solution {
     }
     
     private void reverseString(int startIdx, int lastIdx, String s) {
-        System.out.println("s " + startIdx + " l " + lastIdx);
-        System.out.println("l" + s.substring(startIdx + 1, lastIdx + 1) + "l");
         sb.append(s.substring(startIdx + 1, lastIdx + 1));
         sb.append(" ");
     }
