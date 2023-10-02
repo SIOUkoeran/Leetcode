@@ -31,7 +31,6 @@ class Solution {
         int intervalCnt = lastIdx - startIdx == 0 ? 1 : lastIdx - startIdx;
         
         int[] whitespace = makeWhitespace(maxWidth - total, intervalCnt);
-        System.out.println(Arrays.toString(whitespace));
         for (int i = startIdx; i <= lastIdx; i++) {
             sb.append(words[i]);
             if (i - startIdx < whitespace.length) {
@@ -41,7 +40,6 @@ class Solution {
             }
                 
         }
-        System.out.println(sb.toString());
         return sb.toString();
     }
     
