@@ -11,7 +11,6 @@ class Solution {
                 sb.deleteCharAt(0);
             }
             sb.append(s.charAt(i));
-            System.out.println(sb.toString());
             ans = Math.max(ans, sb.length());
         }
         return ans == Integer.MIN_VALUE ? 0 : ans;
