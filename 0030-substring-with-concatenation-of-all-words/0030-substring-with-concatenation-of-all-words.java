@@ -7,7 +7,6 @@ class Solution {
         for (int i = 0; i <= s.length() - totalLength; i++) {
             String possibleString = s.substring(i, totalLength + i);
             int startIdx = 0;
-            int wordsIdx = 0;
             Map<String, Integer> map = new HashMap<String, Integer>();
             while (startIdx < totalLength) {
                 String w = possibleString.substring(startIdx, startIdx + wordLength);
