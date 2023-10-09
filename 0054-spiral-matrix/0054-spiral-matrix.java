@@ -35,7 +35,6 @@ class Solution {
     
     private Point rightMove(int startX, int startY) {
         for (int i = startY; i < matrix[0].length; i++) {
-            System.out.println(i);
             if (visited[startX][i])
                 return new Point(startX, i - 1);
             this.visited[startX][i] = true;
