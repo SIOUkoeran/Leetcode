@@ -11,19 +11,19 @@ class Solution {
         while (true) {
             point = rightMove(startX, startY + 1);
             if (point.x + 1 >= matrix.length) break;
-            if (point.x + 1 < matrix.length && visited[point.x + 1][point.y])
+            if (visited[point.x + 1][point.y])
                 break;
             point = downMove(point.x + 1, point.y);
             if (point.y - 1 < 0) break;
-            if (point.y - 1 >= 0 && visited[point.x][point.y - 1])
+            if (visited[point.x][point.y - 1])
                 break;
             point = leftMove(point.x, point.y - 1);
             if (point.x - 1 < 0) break;
-            if (point.x - 1 >= 0 && visited[point.x - 1][point.y])
+            if (visited[point.x - 1][point.y])
                 break;
             point = upMove(point.x - 1, point.y);
             if (point.y + 1 >= matrix[0].length) break;
-            if (point.y + 1 < matrix[0].length && visited[point.x][point.y + 1])
+            if (visited[point.x][point.y + 1])
                 break;
             startX = point.x;
             startY = point.y;
@@ -41,7 +41,6 @@ class Solution {
             this.visited[startX][i] = true;
             this.ans.add(matrix[startX][i]);
         }
-        System.out.println(this.visited[0][0]);
         return new Point(0, matrix[0].length - 1);
     }
     
