@@ -4,7 +4,6 @@ class Solution {
         this.board = board;
         for (int i = 0; i < board[0].length; i++) {
             boolean isValid = checkCol(i) && checkRow(i) && checkSubSquare(i);
-            System.out.println("i " + i + checkCol(i) + " " + checkRow(i) + " " + checkSubSquare(i));
             if (!isValid)
                 return false;
         }
@@ -45,7 +44,6 @@ class Solution {
         boolean[] numCheck = new boolean[10];
         for (int i = start * 3 ; i < start * 3 + 3; i++) {
             for (int j = startJ * 3 ; j < startJ * 3 + 3; j++) {
-                System.out.println(" i" + i + " " + j);
                 if (board[i][j] == '.')
                     continue;
                 int val = board[i][j] - '0';
